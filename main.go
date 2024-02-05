@@ -1,28 +1,14 @@
 package main
 
 import (
-	"fmt"
-	"strconv"
+	"os"
 
-	"github.com/airbowen/golang-blockchain/blockchain"
+	"github.com/airbowen/golang-blockchain/blockchain/cli"
 )
 
 func main() {
-	chain := blockchain.InitBlockChain()
+	defer os.Exit(0)
 
-	chain.AddBlock("First Block after Genesis")
-	chain.AddBlock("Second Block after Genesis")
-	chain.AddBlock("Third Block after Genesis")
-
-	for _, block := range chain.Blocks {
-
-		fmt.Printf("Previous Hash: %x\n", block.PrevHash)
-		fmt.Printf("Data in Block: %s\n", block.Data)
-		fmt.Printf("Hash: %x\n", block.Hash)
-
-		pow := blockchain.NewProof(block)
-		fmt.Printf("PoW: %s\n", strconv.FormatBool(pow.Validate()))
-		fmt.Println()
-
-	}
+	cmd := cli.CommandLine{}
+	cmd.Run()
 }
